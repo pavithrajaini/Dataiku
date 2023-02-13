@@ -1,0 +1,64 @@
+micronaut:
+  application:
+    name: Dataiku
+  server:
+    port: 8180
+    cors:
+      enabled: true
+      configurations:
+        ui:
+          allowed-origins:
+            - http://*
+          allowedHeaders:
+            - Content-Type
+          allowedMethods:
+            - POST
+            - GET
+            - PUT
+            - OPTIONS
+            
+  security:
+    authentication: bearer   
+    token:
+      jwt:
+        signatures:
+          secret:
+            generator: 
+              secret: '"${JWT_GENERATOR_SIGNATURE_SECRET:pleaseChangeThisSecretForANewOne}"'    
+        
+ 
+  http:
+    client:
+      ssl:
+        insecure-trust-all-certificates: true
+       
+
+drd:
+  #DEV
+  request-url: ${INTERNAL_USER_REQUEST_URL:xxxxx}
+  certificate-file: ${INTERNAL_USER_CERT_FILE:xxxxx}
+  certificate-pass: ${INTERNAL_USER_CERT_PASS:xxxxx}
+  
+jwt:
+  secret:
+    key: ${JWT_SECRET_KEY:oeRaYY7Wo24sDqKSX3IM9ASGmdGPmkTd9jo1QTy4b7P9Ze5_9hKolVX8xNrQDcNRfVEdTZNOuOyqEGhXEbdJI-ZQ19k_o9MI0y3eZN2lp9jow55FfXMiINEdt1XR85VipRLSOkT6kSpzs2x-jbLDiz9iFVzkd81YKxMgPA7VfZeQUm4n-mOmnWMaVX30zGFU4L3oPBctYKkl4dYfqYWqRNfrgPJVi5DGFjywgxx0ASEiJHtV72paI3fDR2XwlSkyhhmY-ICjCRmsJN4fX1pdoL8a18-aQrvyu4j0Os6dVPYIoPvvY0SAZtWYKHfM15g7A3HD4cVREf9cUsprCRK93w}
+    byPassUrl: ${BYPASS_JWT_AUTHENTICATION:/api/login;/api/verifyLogin;/api/itsmmgame;/api/task-data;/api/warmup-data;/api/subscription/validate;/api/notification-preferences;/api/datasources/bulk}
+    tokenExpiry: ${JWT_TOKEN_EXPIRY_TIME_IN_MIN:90}
+    
+dna:
+  uri: ${DNA_URI:https://dev.dna.app.corpintra.net} 
+  dnaAuthEnable: ${DNA_AUTH_ENABLE:false} 
+  verifyLoginApi: ${DNA_VERIFY_LOGIN_API:/api/verifyLogin}    
+    
+#Cors Filter origin Domains  
+allowedCorsOriginPatternUrl: ${CORS_ORIGIN_URL:http://*}
+          
+netty:
+  default:
+    allocator:
+      max-order: 3          
+
+graphql:
+  enabled: true
+  graphiql:
+    enabled: true
